@@ -13,6 +13,7 @@ namespace MyGame
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
         public static BaseObject[] _objs;
+        public static Random r = new Random();
         //Свойства
         //Ширина и высота игрового поля
         public static int Width { get; set; }
@@ -56,14 +57,21 @@ namespace MyGame
 
         public static void Load()
         {
-            _objs = new BaseObject[30];
-            for(int i = 0; i < _objs.Length/2; i++)
+            _objs = new BaseObject[100];
+            for(int i = 0; i < _objs.Length; i++)
             {
-                _objs[i] = new BaseObject(new Point(600, i * 20), new Point(-i, 0), new Size(10, 10));
-            }
-            for(int i = _objs.Length / 2; i < _objs.Length; i++)
-            {
-                _objs[i] = new Star(new Point(600, i * 20), new Point(i, 0), new Size(5, 5));
+                if (i % 6 == 0)
+                {
+                    _objs[i] = new BaseObject(new Point(r.Next(0, 800), i*6), new Point(-6, 0), new Size(10, 10));
+                }
+                else if(i % 3 == 0)
+                {
+                    _objs[i] = new Star(new Point(r.Next(0, 800), i*6), new Point(-3, 0), new Size(5, 5));
+                }
+                else
+                {
+                    _objs[i] = new Farstar(new Point(r.Next(0, 800), i*6), new Point(-1, 0), new Size(1, 1));
+                }
             }
         }
 
