@@ -14,7 +14,7 @@ namespace MyGame
         }
         public override void Draw()
         {
-            Game.Buffer.Graphics.DrawEllipse(Pens.Red, Pos.X, Pos.Y, Size.Width, Size.Height);
+            Game.Buffer.Graphics.DrawEllipse(Pens.Red, pos.X, pos.Y, size.Width, size.Height);
         }
     }
 }

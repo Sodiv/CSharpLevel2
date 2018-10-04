@@ -9,29 +9,28 @@ namespace MyGame
 {
     class BaseObject
     {
-        protected Point Pos;
-        protected Point Dir;
-        protected Size Size;
+        protected Point pos;
+        protected Point dir;
+        protected Size size;
         public static Random r = new Random();
+        Image image = Image.FromFile("../../Img/planet.png");
         public BaseObject(Point pos, Point dir, Size size)
         {
-            Pos = pos;
-            Dir = dir;
-            Size = size;
+            this.pos = pos;
+            this.dir = dir;
+            this.size = size;
         }
         public virtual void Draw()
         {
-            Image image = Image.FromFile("../../Img/planet.jpg");
-            //Game.Buffer.Graphics.DrawEllipse(Pens.White, Pos.X, Pos.Y, Size.Width, Size.Height);
-            Game.Buffer.Graphics.DrawImage(image, Pos.X, Pos.Y, Size.Width, Size.Height);
+            Game.Buffer.Graphics.DrawImage(image, pos.X, pos.Y, size.Width, size.Height);
         }
         public void Update()
         {
-            Pos.X = Pos.X + Dir.X;
-            if (Pos.X < 0)
+            pos.X = pos.X + dir.X;
+            if (pos.X < 0)
             {
-                Pos.X = Game.Width + Size.Width;
-                Pos.Y = r.Next(0, 600);
+                pos.X = Game.Width + size.Width;
+                pos.Y = r.Next(0, 600);
             }
         }
     }
