@@ -8,17 +8,22 @@ using System.Drawing;
 
 namespace MyGame
 {
-    static class Game
-    {
+    class Game
+    {        
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
         public static BaseObject[] _objs;
         public static Random r = new Random();
-        //Свойства
-        //Ширина и высота игрового поля
         public static int Width { get; set; }
         public static int Height { get; set; }
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
         static Game() { }
+        /// <summary>
+        /// Конструктор прорисовки фона
+        /// </summary>
+        /// <param name="form">Форма для прорисовки</param>
         public static void Init(Form form)
         {
             // Графическое устройство для вывода графики
@@ -37,6 +42,9 @@ namespace MyGame
             timer.Start();
             timer.Tick += Timer_Tick;
         }
+        /// <summary>
+        /// Прорисовка в буфере и вывод на экран
+        /// </summary>
         public static void Draw()
         {
             //Проверяем вывод графики

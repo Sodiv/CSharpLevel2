@@ -9,6 +9,12 @@ namespace MyGame
 {
     class Star : BaseObject
     {
+        /// <summary>
+        /// Конструктор звезды
+        /// </summary>
+        //// <param name="pos">Координаты объекта на экране</param>
+        /// <param name="dir">Направление смещения</param>
+        /// <param name="size">Размер объекта</param>
         public Star(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
         }

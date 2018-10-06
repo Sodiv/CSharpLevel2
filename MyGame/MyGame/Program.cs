@@ -9,15 +9,20 @@ namespace MyGame
 {
     class Program
     {
+        static Form form = new Form();
         static void Main(string[] args)
         {
-            Form form = new Form1();
-            form.Width = 800;
-            form.Height = 600;
-            //Game.Init(form);            
+            
+            form.Width = 500;
+            form.Height = 300;
+            SplashScreen.Init(form);            
             form.Show();
-            //Game.Draw();
             Application.Run(form);
+        }
+
+        public static void Close()
+        {
+            form.Close();
         }
     }
 }
