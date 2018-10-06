@@ -7,20 +7,20 @@ using System.Drawing;
 
 namespace MyGame
 {
-    class BaseObject
+    abstract class BaseObject
     {
         protected Point pos;
         protected Point dir;
         protected Size size;
         public static Random r = new Random();
-        Image image = Image.FromFile("../../Img/planet.png");
+        
         /// <summary>
         /// Конструктор базового объекта
         /// </summary>
         /// <param name="pos">Координаты объекта на экране</param>
         /// <param name="dir">Направление смещения</param>
         /// <param name="size">Размер объекта</param>
-        public BaseObject(Point pos, Point dir, Size size)
+        protected BaseObject(Point pos, Point dir, Size size)
         {
             this.pos = pos;
             this.dir = dir;
@@ -29,14 +29,11 @@ namespace MyGame
         /// <summary>
         /// Прорисовка объекта
         /// </summary>
-        public virtual void Draw()
-        {
-            Game.Buffer.Graphics.DrawImage(image, pos.X, pos.Y, size.Width, size.Height);
-        }
+        public abstract void Draw();
         /// <summary>
         /// Обновление расположения (движение) объекта
         /// </summary>
-        public void Update()
+        public virtual void Update()
         {
             pos.X = pos.X + dir.X;
             if (pos.X < 0)

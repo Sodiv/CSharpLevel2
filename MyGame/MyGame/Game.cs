@@ -13,6 +13,8 @@ namespace MyGame
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
         public static BaseObject[] _objs;
+        private static Bullet _bullet;
+        private static Asteroid[] _asteroids;
         public static Random r = new Random();
         public static int Width { get; set; }
         public static int Height { get; set; }
@@ -47,30 +49,30 @@ namespace MyGame
         /// </summary>
         public static void Draw()
         {
-            //Проверяем вывод графики
-            Buffer.Graphics.Clear(Color.Black);
-            Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
-            Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
-            Buffer.Render();
-
             Buffer.Graphics.Clear(Color.Black);
             foreach (BaseObject obj in _objs) obj.Draw();
+            foreach (BaseObject ast in _asteroids) ast.Draw();
+            _bullet.Draw();
             Buffer.Render();
         }
 
         public static void Update()
         {
             foreach (BaseObject obj in _objs) obj.Update();
+            foreach (BaseObject ast in _asteroids) ast.Update();
+            _bullet.Update();
         }
 
         public static void Load()
         {
             _objs = new BaseObject[100];
+            _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(4, 1));
+            _asteroids = new Asteroid[3];
             for(int i = 0; i < _objs.Length; i++)
             {
                 if (i % 6 == 0)
                 {
-                    _objs[i] = new BaseObject(new Point(r.Next(0, 800), i*6), new Point(-6, 0), new Size(10, 10));
+                    _objs[i] = new Planet(new Point(r.Next(0, 800), i*6), new Point(-6, 0), new Size(10, 10));
                 }
                 else if(i % 3 == 0)
                 {
@@ -80,6 +82,11 @@ namespace MyGame
                 {
                     _objs[i] = new Farstar(new Point(r.Next(0, 800), i*6), new Point(-1, 0), new Size(1, 1));
                 }
+            }
+            for (int i = 0; i < _asteroids.Length; i++)
+            {
+                int a = r.Next(5, 50);
+                _asteroids[i] = new Asteroid(new Point(1000, r.Next(0, Game.Height)), new Point(-a / 5, a), new Size(a, a));
             }
         }
 
