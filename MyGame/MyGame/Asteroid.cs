@@ -18,5 +18,15 @@ namespace MyGame
         {
             Game.Buffer.Graphics.FillEllipse(Brushes.White, pos.X, pos.Y, size.Width, size.Height);
         }
+
+        public override void Update()
+        {
+            pos.X = pos.X + dir.X;
+            if (pos.X < 0)
+            {
+                pos.X = Game.Width + size.Width;
+                pos.Y = r.Next(0, 600);
+            }
+        }
     }
 }

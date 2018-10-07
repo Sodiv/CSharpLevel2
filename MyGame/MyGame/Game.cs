@@ -55,14 +55,18 @@ namespace MyGame
             _bullet.Draw();
             Buffer.Render();
         }
-
+        /// <summary>
+        /// Обновление объектов
+        /// </summary>
         public static void Update()
         {
             foreach (BaseObject obj in _objs) obj.Update();
             foreach (BaseObject ast in _asteroids) ast.Update();
             _bullet.Update();
         }
-
+        /// <summary>
+        /// Создание массивов для BaseObject
+        /// </summary>
         public static void Load()
         {
             _objs = new BaseObject[100];
@@ -89,7 +93,11 @@ namespace MyGame
                 _asteroids[i] = new Asteroid(new Point(1000, r.Next(0, Game.Height)), new Point(-a / 5, a), new Size(a, a));
             }
         }
-
+        /// <summary>
+        /// Конструктор таймера
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void Timer_Tick(object sender, EventArgs e)
         {
             Draw();

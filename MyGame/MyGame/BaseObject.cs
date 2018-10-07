@@ -33,14 +33,6 @@ namespace MyGame
         /// <summary>
         /// Обновление расположения (движение) объекта
         /// </summary>
-        public virtual void Update()
-        {
-            pos.X = pos.X + dir.X;
-            if (pos.X < 0)
-            {
-                pos.X = Game.Width + size.Width;
-                pos.Y = r.Next(0, 600);
-            }
-        }
+        public abstract void Update();
     }
 }
