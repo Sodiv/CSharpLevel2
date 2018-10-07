@@ -7,13 +7,15 @@ using System.Drawing;
 
 namespace MyGame
 {
-    abstract class BaseObject
+    abstract class BaseObject : ICollision
     {
         protected Point pos;
         protected Point dir;
         protected Size size;
         public static Random r = new Random();
-        
+
+        public Rectangle rect => new Rectangle(pos, size);
+
         /// <summary>
         /// Конструктор базового объекта
         /// </summary>
@@ -34,5 +36,7 @@ namespace MyGame
         /// Обновление расположения (движение) объекта
         /// </summary>
         public abstract void Update();
+
+        public bool Collision(ICollision o) => o.rect.IntersectsWith(this.rect);
     }
 }

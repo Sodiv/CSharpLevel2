@@ -28,16 +28,11 @@ namespace MyGame
         /// <param name="form">Форма для прорисовки</param>
         public static void Init(Form form)
         {
-            // Графическое устройство для вывода графики
             Graphics g;
-            // Предоставляет доступ к главному буферу графического контекста для текущего приложения
             _context = BufferedGraphicsManager.Current;
             g = form.CreateGraphics();
-            // Создаем объект (поверхность рисования) и связываем его с формой
-            // Запоминаем размеры формы
             Width = form.Width;
             Height = form.Height;
-            // Связываем буфер в памяти с графическим объектом, чтобы рисовать в буфере
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
             Load();
             Timer timer = new Timer { Interval = 100 };
@@ -51,7 +46,7 @@ namespace MyGame
         {
             Buffer.Graphics.Clear(Color.Black);
             foreach (BaseObject obj in _objs) obj.Draw();
-            foreach (BaseObject ast in _asteroids) ast.Draw();
+            foreach (Asteroid ast in _asteroids) ast.Draw();
             _bullet.Draw();
             Buffer.Render();
         }
@@ -61,7 +56,14 @@ namespace MyGame
         public static void Update()
         {
             foreach (BaseObject obj in _objs) obj.Update();
-            foreach (BaseObject ast in _asteroids) ast.Update();
+            foreach (Asteroid ast in _asteroids)
+            {
+                ast.Update();
+                if(ast.Collision(_bullet))
+                {
+                    System.Media.SystemSounds.Hand.Play();
+                }
+            }
             _bullet.Update();
         }
         /// <summary>

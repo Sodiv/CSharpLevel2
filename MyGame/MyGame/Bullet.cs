@@ -19,6 +19,11 @@ namespace MyGame
         public override void Update()
         {
             pos.X = pos.X + 3;
+            if (pos.X > Game.Width)
+            {
+                pos.X = 0;
+                pos.Y = r.Next(0, Game.Height);
+            }
         }
     }
 }

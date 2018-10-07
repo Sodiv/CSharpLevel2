@@ -14,6 +14,7 @@ namespace MyGame
         {
             power = 1;
         }
+
         public override void Draw()
         {
             Game.Buffer.Graphics.FillEllipse(Brushes.White, pos.X, pos.Y, size.Width, size.Height);
