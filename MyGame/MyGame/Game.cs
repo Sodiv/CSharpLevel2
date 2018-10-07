@@ -47,7 +47,11 @@ namespace MyGame
             Buffer.Graphics.Clear(Color.Black);
             foreach (BaseObject obj in _objs) obj.Draw();
             foreach (Asteroid ast in _asteroids) ast.Draw();
-            _bullet.Draw();
+            if (_bullet == null)
+            {
+                _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(4, 1));
+            }
+            else _bullet.Draw();
             Buffer.Render();
         }
         /// <summary>
@@ -56,15 +60,19 @@ namespace MyGame
         public static void Update()
         {
             foreach (BaseObject obj in _objs) obj.Update();
-            foreach (Asteroid ast in _asteroids)
+            if(_bullet!=null) _bullet.Update();
+            for(int i=0;i<_asteroids.Length;i++)
             {
-                ast.Update();
-                if(ast.Collision(_bullet))
+                if (_asteroids[i] == null) continue;
+                _asteroids[i].Update();
+                if(_bullet!=null && _bullet.Collision(_asteroids[i]))
                 {
-                    System.Media.SystemSounds.Hand.Play();
+                    int a = r.Next(5, 50);
+                    _asteroids[i] = null;
+                    _asteroids[i] = new Asteroid(new Point(a*10, a), new Point(-a / 5, a), new Size(a, a));
+                    _bullet = null;
                 }
             }
-            _bullet.Update();
         }
         /// <summary>
         /// Создание массивов для BaseObject
@@ -78,15 +86,15 @@ namespace MyGame
             {
                 if (i % 6 == 0)
                 {
-                    _objs[i] = new Planet(new Point(r.Next(0, 800), i*6), new Point(-6, 0), new Size(10, 10));
+                    _objs[i] = new Planet(new Point(r.Next(0, r.Next(0, Game.Height)), i*6), new Point(-6, 0), new Size(10, 10));
                 }
                 else if(i % 3 == 0)
                 {
-                    _objs[i] = new Star(new Point(r.Next(0, 800), i*6), new Point(-3, 0), new Size(5, 5));
+                    _objs[i] = new Star(new Point(r.Next(0, r.Next(0, Game.Height)), i*6), new Point(-3, 0), new Size(5, 5));
                 }
                 else
                 {
-                    _objs[i] = new Farstar(new Point(r.Next(0, 800), i*6), new Point(-1, 0), new Size(1, 1));
+                    _objs[i] = new Farstar(new Point(r.Next(0, r.Next(0, Game.Height)), i*6), new Point(-1, 0), new Size(1, 1));
                 }
             }
             for (int i = 0; i < _asteroids.Length; i++)
