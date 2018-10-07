@@ -55,7 +55,13 @@ namespace MyGame
                 //};
                 form.Width = 800;
                 form.Height = 600;
-                Game.Init(form);
+                try
+                {
+                    Game.Init(form);
+                } catch(ArgumentOutOfRangeException outOfRange)
+                {
+                    Console.WriteLine($"Error: {outOfRange}");
+                }
                 form.ShowDialog();
                 Game.Load();
                 Game.Draw();

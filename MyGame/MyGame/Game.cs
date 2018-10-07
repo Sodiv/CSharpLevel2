@@ -31,8 +31,17 @@ namespace MyGame
             Graphics g;
             _context = BufferedGraphicsManager.Current;
             g = form.CreateGraphics();
-            Width = form.Width;
-            Height = form.Height;
+            //Width = form.Width;
+            //Height = form.Height;
+            if (form.Width < 0 || form.Height < 0)
+                throw new ArgumentOutOfRangeException("Размер формы", "Меньше минимального значения");
+            else if (form.Width > 1000 || form.Height > 1000)
+                throw new ArgumentOutOfRangeException("Размер формы", "Больше максимального значения");
+            else
+            {
+                Width = form.Width;
+                Height = form.Height;
+            }
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
             Load();
             Timer timer = new Timer { Interval = 100 };
