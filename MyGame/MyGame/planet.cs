@@ -7,20 +7,24 @@ using System.Threading.Tasks;
 
 namespace MyGame
 {
-    class Farstar : BaseObject
+    class Planet : BaseObject
     {
+        Image image = Image.FromFile("../../Img/planet.png");
         /// <summary>
-        /// Далекие звезды
+        /// Конструктор
         /// </summary>
-        /// <param name="pos">Координаты объекта на экране</param>
-        /// <param name="dir">Направление смещения</param>
-        /// <param name="size">Размер объекта</param>
-        public Farstar(Point pos, Point dir, Size size) : base(pos, dir, size)
+        /// <param name="pos"></param>
+        /// <param name="dir"></param>
+        /// <param name="size"></param>
+        public Planet(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
         }
+        /// <summary>
+        /// Прорисовка планет
+        /// </summary>
         public override void Draw()
         {
-            Game.Buffer.Graphics.DrawEllipse(Pens.Red, pos.X, pos.Y, size.Width, size.Height);
+            Game.Buffer.Graphics.DrawImage(image, pos.X, pos.Y, size.Width, size.Height);
         }
 
         public override void Update()
