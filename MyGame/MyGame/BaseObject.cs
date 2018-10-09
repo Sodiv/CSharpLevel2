@@ -7,6 +7,7 @@ using System.Drawing;
 
 namespace MyGame
 {
+    public delegate void Message();
     abstract class BaseObject : ICollision
     {
         protected Point pos;
