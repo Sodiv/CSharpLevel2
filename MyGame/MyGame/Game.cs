@@ -26,7 +26,7 @@ namespace MyGame
         /// Конструктор прорисовки фона
         /// </summary>
         /// <param name="form">Форма для прорисовки</param>
-        public static void Init(Form form)
+        public void Init(Form form)
         {
             Graphics g;
             _context = BufferedGraphicsManager.Current;
@@ -51,7 +51,7 @@ namespace MyGame
         /// <summary>
         /// Прорисовка в буфере и вывод на экран
         /// </summary>
-        public static void Draw()
+        public void Draw()
         {
             Buffer.Graphics.Clear(Color.Black);
             foreach (BaseObject obj in _objs) obj.Draw();
@@ -66,7 +66,7 @@ namespace MyGame
         /// <summary>
         /// Обновление объектов
         /// </summary>
-        public static void Update()
+        public void Update()
         {
             foreach (BaseObject obj in _objs) obj.Update();
             if(_bullet!=null) _bullet.Update();
@@ -86,7 +86,7 @@ namespace MyGame
         /// <summary>
         /// Создание массивов для BaseObject
         /// </summary>
-        public static void Load()
+        public void Load()
         {
             _objs = new BaseObject[100];
             _bullet = new Bullet(new Point(0, 200), new Point(5, 0), new Size(4, 1));
@@ -117,7 +117,7 @@ namespace MyGame
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void Timer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, EventArgs e)
         {
             Draw();
             Update();
