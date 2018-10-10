@@ -7,17 +7,16 @@ using System.Drawing;
 
 namespace MyGame
 {
-    class Asteroid : BaseObject
-    {
-        public int power { get; set; }
-        public Asteroid(Point pos, Point dir, Size size) : base(pos, dir, size)
+    class Heal : Asteroid
+    {        
+        public Heal(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
-            power = 1;
+            power = -5;
         }
 
         public override void Draw()
         {
-            Game.Buffer.Graphics.FillEllipse(Brushes.White, pos.X, pos.Y, size.Width, size.Height);            
+            Game.Buffer.Graphics.FillEllipse(Brushes.Red, pos.X, pos.Y, size.Width, size.Height);
         }
 
         public override void Update()

@@ -15,8 +15,10 @@ namespace MyGame
         public static BaseObject[] _objs;
         private static Bullet _bullet;
         private static Asteroid[] _asteroids;
+        private static Heal _heal;
         private static Ship _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(10, 10));
         private static Timer _timer = new Timer();
+        private int createHeal = 500;
         public static Random r = new Random();
         public static int Width { get; set; }
         public static int Height { get; set; }
@@ -74,6 +76,7 @@ namespace MyGame
             foreach (Asteroid ast in _asteroids) ast?.Draw();
             _bullet?.Draw();
             _ship?.Draw();
+            _heal?.Draw();
             if (_ship != null)
                 Buffer.Graphics.DrawString("Energy: " + _ship.Energy, SystemFonts.DefaultFont, Brushes.White, 0, 0);
             Buffer.Render();
@@ -85,6 +88,7 @@ namespace MyGame
         {
             foreach (BaseObject obj in _objs) obj.Update();
             _bullet?.Update();
+            _heal?.Update();
             for(int i=0;i<_asteroids.Length;i++)
             {
                 if (_asteroids[i] == null) continue;
@@ -96,6 +100,7 @@ namespace MyGame
                     _bullet = null;
                     continue;
                 }
+                if (_heal!=null && _ship.Collision(_heal)) _ship.EnergyLow(_heal.power);
                 if (!_ship.Collision(_asteroids[i])) continue;
                 var rnd = new Random();
                 _ship.EnergyLow(rnd.Next(1, 10));
@@ -129,7 +134,7 @@ namespace MyGame
             {
                 int a = r.Next(5, 50);
                 _asteroids[i] = new Asteroid(new Point(1000, r.Next(0, Game.Height)), new Point(-a / 5, a), new Size(a, a));
-            }
+            }            
         }
         public static void Finish()
         {
@@ -144,8 +149,14 @@ namespace MyGame
         /// <param name="e"></param>
         private void Timer_Tick(object sender, EventArgs e)
         {
+            createHeal = createHeal - 1;
             Draw();
             Update();
+            if (createHeal == 0)
+            {
+                _heal = new Heal(new Point(1000, r.Next(0, Game.Height)), new Point(-5, 0), new Size(20, 20));
+                createHeal = r.Next(300, 10000);
+            }
         }
     }
 }

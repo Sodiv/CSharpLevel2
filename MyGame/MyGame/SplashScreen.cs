@@ -92,7 +92,7 @@ namespace MyGame
                 //    Width = Screen.PrimaryScreen.Bounds.Width,
                 //    Height = Screen.PrimaryScreen.Bounds.Height
                 //};
-                form.Width = 800;
+                form.Width = 1000;
                 form.Height = 600;
                 try
                 {
