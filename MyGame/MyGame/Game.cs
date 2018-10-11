@@ -10,7 +10,8 @@ namespace MyGame
 {
     delegate void GetArgs(string value);
     class Game
-    {        
+    {
+        Form form;
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
         public static BaseObject[] _objs;
@@ -35,6 +36,7 @@ namespace MyGame
         /// <param name="form">Форма для прорисовки</param>
         public void Init(Form form)
         {
+            this.form = form;
             Graphics g;
             _context = BufferedGraphicsManager.Current;
             g = form.CreateGraphics();
@@ -53,10 +55,17 @@ namespace MyGame
             Load();
             Ship.MessageDie += Finish;
             form.KeyDown += Form_KeyDown;
+            this.form.FormClosing += Form_FormClosing;
             _timer = new Timer { Interval = 100 };
             _timer.Start();
             _timer.Tick += Timer_Tick;
         }
+
+        private void Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _timer.Stop();
+        }
+
         /// <summary>
         /// Обработчик нажатия кнопок
         /// </summary>
@@ -167,7 +176,7 @@ namespace MyGame
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Timer_Tick(object sender, EventArgs e)
-        {
+        {            
             createHeal = createHeal - 1;
             Draw();
             Update();
@@ -177,5 +186,6 @@ namespace MyGame
                 createHeal = r.Next(300, 10000);
             }
         }
+
     }
 }
