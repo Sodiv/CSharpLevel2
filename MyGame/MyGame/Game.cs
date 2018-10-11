@@ -8,6 +8,7 @@ using System.Drawing;
 
 namespace MyGame
 {
+    delegate void GetArgs(string value);
     class Game
     {        
         private static BufferedGraphicsContext _context;
@@ -19,6 +20,8 @@ namespace MyGame
         private static Ship _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(10, 10));
         private static Timer _timer = new Timer();
         private int createHeal = 500;
+        private static int score = 0;
+        public static JournalRecords journalRecords = new JournalRecords();
         public static Random r = new Random();
         public static int Width { get; set; }
         public static int Height { get; set; }
@@ -98,6 +101,7 @@ namespace MyGame
                     System.Media.SystemSounds.Hand.Play();
                     _asteroids[i] = null;
                     _bullet = null;
+                    score += 1;
                     continue;
                 }
                 if (_heal!=null && _ship.Collision(_heal)) _ship.EnergyLow(_heal.power);
@@ -136,11 +140,19 @@ namespace MyGame
                 _asteroids[i] = new Asteroid(new Point(1000, r.Next(0, Game.Height)), new Point(-a / 5, a), new Size(a, a));
             }            
         }
+        /// <summary>
+        /// Окончание игры
+        /// </summary>
         public static void Finish()
         {
+            WorkData("Players " + Convert.ToString(score), journalRecords.RecordsWrite);
             _timer.Stop();
             Buffer.Graphics.DrawString("The End", new Font(FontFamily.GenericSansSerif, 60, FontStyle.Underline), Brushes.White, 200, 100);
             Buffer.Render();
+        }
+        static void WorkData(string msg, GetArgs method)
+        {
+            method(msg);
         }
         /// <summary>
         /// Конструктор таймера
