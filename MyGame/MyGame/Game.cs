@@ -98,16 +98,22 @@ namespace MyGame
                 _asteroids[i].Update();
                 if(_bullet!=null && _bullet.Collision(_asteroids[i]))
                 {
+                    WorkData("Уничтожен астероид", journalRecords.JournalWrite);
                     System.Media.SystemSounds.Hand.Play();
                     _asteroids[i] = null;
                     _bullet = null;
                     score += 1;
                     continue;
                 }
-                if (_heal!=null && _ship.Collision(_heal)) _ship.EnergyLow(_heal.power);
+                if (_heal != null && _ship.Collision(_heal))
+                {
+                    WorkData($"Корабль отлечился на {_heal.power} хитов", journalRecords.JournalWrite);
+                    _ship.EnergyLow(_heal.power);
+                }
                 if (!_ship.Collision(_asteroids[i])) continue;
                 var rnd = new Random();
                 _ship.EnergyLow(rnd.Next(1, 10));
+                WorkData("Корабль столкнулся с астероидом и получил урон", journalRecords.JournalWrite);
                 System.Media.SystemSounds.Asterisk.Play();
                 if (_ship.Energy <= 0) _ship?.Die();
             }
@@ -146,6 +152,7 @@ namespace MyGame
         public static void Finish()
         {
             WorkData("Players " + Convert.ToString(score), journalRecords.RecordsWrite);
+            WorkData("Игра окончена!", journalRecords.JournalWrite);
             _timer.Stop();
             Buffer.Graphics.DrawString("The End", new Font(FontFamily.GenericSansSerif, 60, FontStyle.Underline), Brushes.White, 200, 100);
             Buffer.Render();
