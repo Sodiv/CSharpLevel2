@@ -92,7 +92,7 @@ namespace MyGame
                 //    Width = Screen.PrimaryScreen.Bounds.Width,
                 //    Height = Screen.PrimaryScreen.Bounds.Height
                 //};
-                form.Width = 800;
+                form.Width = 1000;
                 form.Height = 600;
                 try
                 {
@@ -101,9 +101,9 @@ namespace MyGame
                 {
                     Console.WriteLine($"Error: {outOfRange}");
                 }
-                form.Show();                
-                game.Load();
-                game.Draw();
+                form.ShowDialog();                
+                //game.Load();
+                //game.Draw();                
             }
             if (i == 2)
             {

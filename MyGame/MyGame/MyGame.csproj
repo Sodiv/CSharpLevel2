@@ -50,10 +50,13 @@
     <Compile Include="Bullet.cs" />
     <Compile Include="Farstar.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Heal.cs" />
     <Compile Include="ICollision.cs" />
+    <Compile Include="JournalRecords.cs" />
     <Compile Include="Planet.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ship.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Star.cs" />
     <Compile Include="StarsScreen.cs" />
