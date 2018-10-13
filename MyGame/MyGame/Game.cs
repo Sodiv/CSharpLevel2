@@ -16,12 +16,13 @@ namespace MyGame
         public static BufferedGraphics Buffer;
         public static BaseObject[] _objs;
         private static List<Bullet> _bullets = new List<Bullet>();
-        private static Asteroid[] _asteroids;
+        private static List<Asteroid> _asteroids = new List<Asteroid>();
         private static Heal _heal;
         private static Ship _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(10, 10));
         private static Timer _timer = new Timer();
         private int createHeal = 500;
         private static int score = 0;
+        private int k = 3;
         public static JournalRecords journalRecords = new JournalRecords();
         public static Random r = new Random();
         public static int Width { get; set; }
@@ -102,32 +103,47 @@ namespace MyGame
             foreach (BaseObject obj in _objs) obj.Update();
             foreach (Bullet b in _bullets) b.Update();
             _heal?.Update();
-            for(var i=0;i<_asteroids.Length;i++)
+            for(var i=0; i<_asteroids.Count; i++)
             {
                 if (_asteroids[i] == null) continue;
                 _asteroids[i].Update();
+                if (_ship.Collision(_asteroids[i]))
+                {
+                    var rnd = new Random();
+                    _ship.EnergyLow(rnd.Next(1, 10));
+                    WorkData("Корабль столкнулся с астероидом и получил урон", journalRecords.JournalWrite);
+                    System.Media.SystemSounds.Asterisk.Play();
+                }
+                if (_ship.Energy <= 0) _ship.Die();
                 for (int j = 0; j < _bullets.Count; j++)
                     if (_asteroids[i] != null && _bullets[j].Collision(_asteroids[i]))
                     {
                         WorkData("Уничтожен астероид", journalRecords.JournalWrite);
                         System.Media.SystemSounds.Hand.Play();
-                        _asteroids[i] = null;
+                        _asteroids.RemoveAt(i);
                         _bullets.RemoveAt(j);
                         score += 1;
                         j--;
-                        continue;
+                        i--;
                     }
                 if (_heal != null && _ship.Collision(_heal))
                 {
                     WorkData($"Корабль отлечился на {_heal.power} хитов", journalRecords.JournalWrite);
                     _ship.EnergyLow(_heal.power);
                 }
-                if (_asteroids[i]==null || !_ship.Collision(_asteroids[i])) continue;
-                var rnd = new Random();
-                _ship.EnergyLow(rnd.Next(1, 10));
-                WorkData("Корабль столкнулся с астероидом и получил урон", journalRecords.JournalWrite);
-                System.Media.SystemSounds.Asterisk.Play();
-                if (_ship.Energy <= 0) _ship.Die();
+                if (_asteroids.Count == 0) AsteroidLoad(++k);
+            }
+        }
+        /// <summary>
+        /// Создание коллекции астероидов
+        /// </summary>
+        /// <param name="k">Количество астероидов</param>
+        public void AsteroidLoad(int k)
+        {
+            for(int i=0; i < k; i++)
+            {
+                int a = r.Next(5, 50);
+                _asteroids.Add(new Asteroid(new Point(1000, r.Next(0, Game.Height)), new Point(-a / 5, a), new Size(a, a)));
             }
         }
         /// <summary>
@@ -136,7 +152,7 @@ namespace MyGame
         public void Load()
         {
             _objs = new BaseObject[100];
-            _asteroids = new Asteroid[3];
+            AsteroidLoad(k);
             for(int i = 0; i < _objs.Length; i++)
             {
                 if (i % 6 == 0)
@@ -151,12 +167,7 @@ namespace MyGame
                 {
                     _objs[i] = new Farstar(new Point(r.Next(0, r.Next(0, Game.Height)), i*6), new Point(-1, 0), new Size(1, 1));
                 }
-            }
-            for (int i = 0; i < _asteroids.Length; i++)
-            {
-                int a = r.Next(5, 50);
-                _asteroids[i] = new Asteroid(new Point(1000, r.Next(0, Game.Height)), new Point(-a / 5, a), new Size(a, a));
-            }            
+            }         
         }
         /// <summary>
         /// Окончание игры
