@@ -9,6 +9,7 @@ namespace MyGame
 {
     class Ship : BaseObject
     {
+        Image image = Image.FromFile("../../Img/Feature.png");
         public static event Message MessageDie;
         private int _energy = 100;
         public int Energy => _energy;
@@ -22,7 +23,8 @@ namespace MyGame
 
         public override void Draw()
         {
-            Game.Buffer.Graphics.FillEllipse(Brushes.Wheat, pos.X, pos.Y, size.Width, size.Height);
+            //Game.Buffer.Graphics.FillEllipse(Brushes.Wheat, pos.X, pos.Y, size.Width, size.Height);
+            Game.Buffer.Graphics.DrawImage(image, pos.X, pos.Y, size.Width, size.Height);
         }
 
         public override void Update()

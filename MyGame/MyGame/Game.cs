@@ -18,7 +18,7 @@ namespace MyGame
         private static List<Bullet> _bullets = new List<Bullet>();
         private static List<Asteroid> _asteroids = new List<Asteroid>();
         private static Heal _heal;
-        private static Ship _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(10, 10));
+        private static Ship _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(39, 39));
         private static Timer _timer = new Timer();
         private int createHeal = 500;
         private static int score = 0;
@@ -75,7 +75,7 @@ namespace MyGame
         /// <param name="e"></param>
         private void Form_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.ControlKey) _bullets.Add(new Bullet(new Point(_ship.rect.X + 10, _ship.rect.Y + 4), new Point(4, 0), new Size(4, 1)));
+            if (e.KeyCode == Keys.ControlKey) _bullets.Add(new Bullet(new Point(_ship.rect.X + 30, _ship.rect.Y + 18), new Point(4, 0), new Size(4, 1)));
             if (e.KeyCode == Keys.Up) _ship.Up();
             if (e.KeyCode == Keys.Down) _ship.Down();
         }
