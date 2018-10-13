@@ -12,7 +12,6 @@ namespace MyGame
         static Form form = new Form();
         static void Main(string[] args)
         {
-            
             form.Width = 500;
             form.Height = 300;
             SplashScreen.Init(form);            

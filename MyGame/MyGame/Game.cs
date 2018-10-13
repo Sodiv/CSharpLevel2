@@ -15,7 +15,7 @@ namespace MyGame
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
         public static BaseObject[] _objs;
-        private static Bullet _bullet;
+        private static List<Bullet> _bullets = new List<Bullet>();
         private static Asteroid[] _asteroids;
         private static Heal _heal;
         private static Ship _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(10, 10));
@@ -64,6 +64,7 @@ namespace MyGame
         private void Form_FormClosing(object sender, FormClosingEventArgs e)
         {
             _timer.Stop();
+            Buffer.Dispose();
         }
 
         /// <summary>
@@ -73,7 +74,7 @@ namespace MyGame
         /// <param name="e"></param>
         private void Form_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.ControlKey) _bullet = new Bullet(new Point(_ship.rect.X + 10, _ship.rect.Y + 4), new Point(4, 0), new Size(4, 1));
+            if (e.KeyCode == Keys.ControlKey) _bullets.Add(new Bullet(new Point(_ship.rect.X + 10, _ship.rect.Y + 4), new Point(4, 0), new Size(4, 1)));
             if (e.KeyCode == Keys.Up) _ship.Up();
             if (e.KeyCode == Keys.Down) _ship.Down();
         }
@@ -86,7 +87,7 @@ namespace MyGame
             Buffer.Graphics.Clear(Color.Black);
             foreach (BaseObject obj in _objs) obj.Draw();
             foreach (Asteroid ast in _asteroids) ast?.Draw();
-            _bullet?.Draw();
+            foreach (Bullet b in _bullets) b.Draw();
             _ship?.Draw();
             _heal?.Draw();
             if (_ship != null)
@@ -99,32 +100,34 @@ namespace MyGame
         public void Update()
         {
             foreach (BaseObject obj in _objs) obj.Update();
-            _bullet?.Update();
+            foreach (Bullet b in _bullets) b.Update();
             _heal?.Update();
-            for(int i=0;i<_asteroids.Length;i++)
+            for(var i=0;i<_asteroids.Length;i++)
             {
                 if (_asteroids[i] == null) continue;
                 _asteroids[i].Update();
-                if(_bullet!=null && _bullet.Collision(_asteroids[i]))
-                {
-                    WorkData("Уничтожен астероид", journalRecords.JournalWrite);
-                    System.Media.SystemSounds.Hand.Play();
-                    _asteroids[i] = null;
-                    _bullet = null;
-                    score += 1;
-                    continue;
-                }
+                for (int j = 0; j < _bullets.Count; j++)
+                    if (_asteroids[i] != null && _bullets[j].Collision(_asteroids[i]))
+                    {
+                        WorkData("Уничтожен астероид", journalRecords.JournalWrite);
+                        System.Media.SystemSounds.Hand.Play();
+                        _asteroids[i] = null;
+                        _bullets.RemoveAt(j);
+                        score += 1;
+                        j--;
+                        continue;
+                    }
                 if (_heal != null && _ship.Collision(_heal))
                 {
                     WorkData($"Корабль отлечился на {_heal.power} хитов", journalRecords.JournalWrite);
                     _ship.EnergyLow(_heal.power);
                 }
-                if (!_ship.Collision(_asteroids[i])) continue;
+                if (_asteroids[i]==null || !_ship.Collision(_asteroids[i])) continue;
                 var rnd = new Random();
                 _ship.EnergyLow(rnd.Next(1, 10));
                 WorkData("Корабль столкнулся с астероидом и получил урон", journalRecords.JournalWrite);
                 System.Media.SystemSounds.Asterisk.Play();
-                if (_ship.Energy <= 0) _ship?.Die();
+                if (_ship.Energy <= 0) _ship.Die();
             }
         }
         /// <summary>
