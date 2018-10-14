@@ -11,20 +11,20 @@ namespace MyGame
     delegate void GetArgs(string value);
     class Game
     {
-        Form form;
-        private static BufferedGraphicsContext _context;
+        Form f;
+        private BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
-        public static BaseObject[] _objs;
-        private static List<Bullet> _bullets = new List<Bullet>();
-        private static List<Asteroid> _asteroids = new List<Asteroid>();
-        private static Heal _heal;
-        private static Ship _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(39, 39));
-        private static Timer _timer = new Timer();
+        public BaseObject[] _objs;
+        private List<Bullet> _bullets = new List<Bullet>();
+        private List<Asteroid> _asteroids = new List<Asteroid>();
+        private Heal _heal;
+        private Ship _ship = new Ship(new Point(10, 400), new Point(5, 5), new Size(39, 39));
+        private Timer _timer = new Timer();
         private int createHeal = 500;
-        private static int score = 0;
+        private int score = 0;
         private int k = 3;
-        public static JournalRecords journalRecords = new JournalRecords();
-        public static Random r = new Random();
+        public JournalRecords journalRecords = new JournalRecords();
+        public Random r = new Random();
         public static int Width { get; set; }
         public static int Height { get; set; }
         /// <summary>
@@ -37,26 +37,26 @@ namespace MyGame
         /// <param name="form">Форма для прорисовки</param>
         public void Init(Form form)
         {
-            this.form = form;
+            this.f = form;
             Graphics g;
             _context = BufferedGraphicsManager.Current;
-            g = form.CreateGraphics();
+            g = f.CreateGraphics();
             //Width = form.Width;
             //Height = form.Height;
-            if (form.Width < 0 || form.Height < 0)
+            if (f.Width < 0 || form.Height < 0)
                 throw new ArgumentOutOfRangeException("Размер формы", "Меньше минимального значения");
-            else if (form.Width > 1000 || form.Height > 1000)
+            else if (f.Width > 1000 || form.Height > 1000)
                 throw new ArgumentOutOfRangeException("Размер формы", "Больше максимального значения");
             else
             {
-                Width = form.Width;
-                Height = form.Height;
+                Width = f.Width;
+                Height = f.Height;
             }
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
             Load();
             Ship.MessageDie += Finish;
             form.KeyDown += Form_KeyDown;
-            this.form.FormClosing += Form_FormClosing;
+            this.f.FormClosing += Form_FormClosing;
             _timer = new Timer { Interval = 100 };
             _timer.Start();
             _timer.Tick += Timer_Tick;
@@ -123,8 +123,7 @@ namespace MyGame
                         _asteroids.RemoveAt(i);
                         _bullets.RemoveAt(j);
                         score += 1;
-                        j--;
-                        i--;
+                        break;
                     }
                 if (_heal != null && _ship.Collision(_heal))
                 {
@@ -142,8 +141,8 @@ namespace MyGame
         {
             for(int i=0; i < k; i++)
             {
-                int a = r.Next(5, 50);
-                _asteroids.Add(new Asteroid(new Point(1000, r.Next(0, Game.Height)), new Point(-a / 5, a), new Size(a, a)));
+                int a = r.Next(10, 50);
+                _asteroids.Add(new Asteroid(new Point(1000, r.Next(0, Height)), new Point(-a / 5, a), new Size(a, a)));
             }
         }
         /// <summary>
@@ -157,22 +156,22 @@ namespace MyGame
             {
                 if (i % 6 == 0)
                 {
-                    _objs[i] = new Planet(new Point(r.Next(0, r.Next(0, Game.Height)), i*6), new Point(-6, 0), new Size(10, 10));
+                    _objs[i] = new Planet(new Point(r.Next(0, r.Next(0, Height)), i*6), new Point(-6, 0), new Size(10, 10));
                 }
                 else if(i % 3 == 0)
                 {
-                    _objs[i] = new Star(new Point(r.Next(0, r.Next(0, Game.Height)), i*6), new Point(-3, 0), new Size(5, 5));
+                    _objs[i] = new Star(new Point(r.Next(0, r.Next(0, Height)), i*6), new Point(-3, 0), new Size(5, 5));
                 }
                 else
                 {
-                    _objs[i] = new Farstar(new Point(r.Next(0, r.Next(0, Game.Height)), i*6), new Point(-1, 0), new Size(1, 1));
+                    _objs[i] = new Farstar(new Point(r.Next(0, r.Next(0, Height)), i*6), new Point(-1, 0), new Size(1, 1));
                 }
             }         
         }
         /// <summary>
         /// Окончание игры
         /// </summary>
-        public static void Finish()
+        public void Finish()
         {
             WorkData("Players " + Convert.ToString(score), journalRecords.RecordsWrite);
             WorkData("Игра окончена!", journalRecords.JournalWrite);
@@ -196,7 +195,7 @@ namespace MyGame
             Update();
             if (createHeal == 0)
             {
-                _heal = new Heal(new Point(1000, r.Next(0, Game.Height)), new Point(-5, 0), new Size(20, 20));
+                _heal = new Heal(new Point(1000, r.Next(0, Height)), new Point(-5, 0), new Size(20, 20));
                 createHeal = r.Next(300, 10000);
             }
         }

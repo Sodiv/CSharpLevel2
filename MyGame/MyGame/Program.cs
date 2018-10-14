@@ -18,10 +18,5 @@ namespace MyGame
             form.Show();
             Application.Run(form);
         }
-
-        public static void Close()
-        {
-            form.Close();
-        }
     }
 }

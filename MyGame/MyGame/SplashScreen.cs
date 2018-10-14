@@ -107,7 +107,7 @@ namespace MyGame
             }
             if (i == 2)
             {
-                Program.Close();
+                Application.Exit();
             }
         }
     }
