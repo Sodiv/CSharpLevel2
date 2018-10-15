@@ -37,7 +37,7 @@ namespace MyGame
         /// <param name="form">Форма для прорисовки</param>
         public void Init(Form form)
         {
-            this.f = form;
+            f = form;
             Graphics g;
             _context = BufferedGraphicsManager.Current;
             g = f.CreateGraphics();
@@ -121,8 +121,9 @@ namespace MyGame
                         WorkData("Уничтожен астероид", journalRecords.JournalWrite);
                         System.Media.SystemSounds.Hand.Play();
                         _asteroids.RemoveAt(i);
+                        _asteroids[j].power--;
                         _bullets.RemoveAt(j);
-                        score += 1;
+                        score++;
                         break;
                     }
                 if (_heal != null && _ship.Collision(_heal))

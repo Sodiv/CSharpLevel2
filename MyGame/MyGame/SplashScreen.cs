@@ -102,8 +102,6 @@ namespace MyGame
                     Console.WriteLine($"Error: {outOfRange}");
                 }
                 form.ShowDialog();                
-                //game.Load();
-                //game.Draw();                
             }
             if (i == 2)
             {
