@@ -19,13 +19,18 @@ namespace Task2
                 vs.Add(rnd.Next(2, 10));
             }
             // для целых чисел
-            foreach(int val in vs.Distinct())
+            foreach (int val in vs.Distinct())
             {
                 Console.WriteLine(val + " - " + vs.Where(x => x == val).Count() + " раз");
             }
             Console.ReadKey();
             // с помощью LINQ
-            
+            foreach (var val in vs.Distinct())
+            {
+                var s = (from i in vs where i == val select i).Count();
+                Console.WriteLine($"{val} - {s} раз");
+            }
+            Console.ReadKey();
         }
     }
 }
