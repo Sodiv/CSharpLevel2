@@ -9,6 +9,7 @@ namespace MyGame
 {
     class Asteroid : BaseObject
     {
+        Image image = Image.FromFile("../../Img/asteroid.gif");
         public int power { get; set; }
         public Asteroid(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
@@ -17,7 +18,8 @@ namespace MyGame
 
         public override void Draw()
         {
-            Game.Buffer.Graphics.FillEllipse(Brushes.White, pos.X, pos.Y, size.Width, size.Height);            
+            //Game.Buffer.Graphics.FillEllipse(Brushes.White, pos.X, pos.Y, size.Width, size.Height);
+            Game.Buffer.Graphics.DrawImage(image, pos.X, pos.Y, size.Width, size.Height);
         }
 
         public override void Update()
