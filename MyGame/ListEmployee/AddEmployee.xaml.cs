@@ -27,7 +27,7 @@ namespace ListEmployee
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            employeeView.AddEmployee(tbName.Text, Convert.ToInt32(tbAge.Text), 0);
+            employeeView.AddEmployee(tbName.Text, Convert.ToInt32(tbAge.Text), cbDepartment.SelectedIndex+1);
             Close();
         }
     }

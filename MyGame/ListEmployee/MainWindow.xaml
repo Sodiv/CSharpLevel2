@@ -22,10 +22,10 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock FontSize="18" Text="{Binding Model.Name}"/>
+                        <TextBlock FontSize="18" Text="{Binding Model.Name, UpdateSourceTrigger=PropertyChanged}"/>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Возраст: "/>
-                            <TextBlock Text="{Binding Model.Age}"/>
+                            <TextBlock Text="{Binding Model.Age, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Отдел: "/>

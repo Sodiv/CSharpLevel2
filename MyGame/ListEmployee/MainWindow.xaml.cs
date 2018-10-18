@@ -41,5 +41,10 @@ namespace ListEmployee
             window.employeeView = employeeView;
             window.Show();
         }
+
+        private void ListBox_LayoutUpdated(object sender, EventArgs e)
+        {
+
+        }
     }
 }
