@@ -18,26 +18,43 @@
         </Grid.ColumnDefinitions>
         <TextBlock Text="Список сотрудников" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
         <TextBlock Text="Список департаментов" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0"/>        
-        <ListBox ItemsSource="{Binding employeeViewModels}" SelectedItem="{Binding SelectedEmployee}" Grid.Column="0" Grid.Row="1">
+        <ListBox ItemsSource="{Binding employeeViewModels, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedEmployee}" Grid.Column="0" Grid.Row="1">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock FontSize="18" Text="{Binding Model.Name}"/>
-                        <TextBlock Text="{Binding Model.Age}"/>
-                        <ComboBox ItemsSource="{Binding departmentViewModels}"
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Возраст: "/>
+                            <TextBlock Text="{Binding Model.Age}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Отдел: "/>
+                            <ComboBox ItemsSource="{Binding departmentViewModels}"
                                   DisplayMemberPath="Model.Name"
                                   SelectedValue="{Binding Model.DepartmentId}"
                                   SelectedValuePath="Model.ID" IsEnabled="False"/>
+                        </StackPanel>
+                        
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <StackPanel Grid.Column="1" Grid.Row="1" DataContext="{Binding SelectedEmployee}">
+            <TextBlock Text="Имя:" FontWeight="Bold"/>
             <TextBox Text="{Binding Model.Name}"/>
+            <TextBlock Text="Возраст:" FontWeight="Bold"/>
+            <TextBox Text="{Binding Model.Age}"/>
+            <TextBlock Text="Отдел:" FontWeight="Bold"/>
             <ComboBox ItemsSource="{Binding departmentViewModels}"
                                   DisplayMemberPath="Model.Name"
                                   SelectedValue="{Binding Model.DepartmentId}"
                                   SelectedValuePath="Model.ID"/>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal">
+            <Button Click="Button_Click">Добавить Сотрудника</Button>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
+            <Button Click="Button_Click_1">Добавить отдел</Button>
         </StackPanel>
     </Grid>
 </Window>

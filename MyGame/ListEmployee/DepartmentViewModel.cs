@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace ListEmployee
 {
-    class DepartmentViewModel : INotifyPropertyChanged
+    public class DepartmentViewModel : INotifyPropertyChanged
     {        
         public DepartmentViewModel(Department model)
         {

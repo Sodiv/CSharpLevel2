@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ListEmployee
 {
-    class EmployeeView
+    public class EmployeeView
     {
-        ObservableCollection<Department> departments { get; set; }
+        public ObservableCollection<Department> departments { get; set; }
         ObservableCollection<Employee> employees { get; set; }
         private EmployeeViewModel selectedEmployee;
 
@@ -19,8 +19,21 @@ namespace ListEmployee
             set { selectedEmployee = value; }
         }
 
-        public EmployeeView()
+        public void AddEmployee(string name, int age, int departmentId)
         {
+            Employee employee = new Employee { Name = name, Age = age, DepartmentId = departmentId };
+            employees.Add(employee);
+            EEE();
+        }
+
+        public void AddDepartment(string name)
+        {
+            int i = departments.Count();
+            departments.Add(new Department { ID = i, Name = name });
+        }
+
+        public EmployeeView()
+        {            
             departments = new ObservableCollection<Department>
             {
                 new Department{ID=0, Name="Администрация"},
@@ -31,8 +44,13 @@ namespace ListEmployee
                 new Employee{Name="Дмитрий", Age=34, DepartmentId=0},
                 new Employee{Name="Юлия", Age=42, DepartmentId=1}
             };
+            EEE();
+        }
+
+        public void EEE()
+        {
             var employeeViewModel = new List<EmployeeViewModel>();
-            foreach(var emp in employees)
+            foreach (var emp in employees)
             {
                 employeeViewModel.Add(new EmployeeViewModel(emp, departments));
             }

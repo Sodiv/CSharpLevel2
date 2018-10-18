@@ -20,16 +20,26 @@ namespace ListEmployee
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {        
+    {
+        EmployeeView employeeView = new EmployeeView();
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new EmployeeView();
+            DataContext = employeeView;
         }
 
-        private void TextBlock_SourceUpdated(object sender, DataTransferEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
+            AddEmployee window = new AddEmployee();
+            window.employeeView = employeeView;
+            window.Show();
+        }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            AddDepartment window = new AddDepartment();
+            window.employeeView = employeeView;
+            window.Show();
         }
     }
 }
