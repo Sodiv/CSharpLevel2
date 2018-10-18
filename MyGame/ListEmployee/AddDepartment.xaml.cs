@@ -28,6 +28,7 @@ namespace ListEmployee
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             employeeView.AddDepartment(tbName.Text);
+            Close();
         }
     }
 }

@@ -50,10 +50,10 @@
                                   SelectedValue="{Binding Model.DepartmentId}"
                                   SelectedValuePath="Model.ID"/>
         </StackPanel>
-        <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal">
+        <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Click="Button_Click">Добавить Сотрудника</Button>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
+        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Click="Button_Click_1">Добавить отдел</Button>
         </StackPanel>
     </Grid>
