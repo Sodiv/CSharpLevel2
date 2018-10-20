@@ -11,24 +11,19 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ListEmployee.Classes;
 
 namespace ListEmployee
 {
     /// <summary>
-    /// Логика взаимодействия для AddDepartment.xaml
+    /// Логика взаимодействия для WindowEmployees.xaml
     /// </summary>
-    public partial class AddDepartment : Window
+    public partial class WindowEmployees : Window
     {
-        public EmployeeView employeeView { get; set; }
-        public AddDepartment()
+        public WindowEmployees(Presenter p)
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            employeeView.AddDepartment(tbName.Text);
-            Close();
+            DataContext = p.Data();
         }
     }
 }

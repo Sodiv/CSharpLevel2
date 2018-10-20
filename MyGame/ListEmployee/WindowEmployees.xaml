@@ -4,22 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ListEmployee"
-        xmlns:Classes="clr-namespace:ListEmployee.Classes" x:Class="ListEmployee.AddEmployees"
+        xmlns:Classes="clr-namespace:ListEmployee.Classes" x:Class="ListEmployee.WindowEmployees"
         mc:Ignorable="d"
         Title="WindowEmployees" Height="450" Width="345">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="162*"/>
-            <RowDefinition Height="257*"/>
-        </Grid.RowDefinitions>
-        <StackPanel DataContext="{Binding employee}" Grid.Row="0">
+        <StackPanel DataContext="{Binding SelectedEmployee}">
             <TextBlock Text="Имя:" FontWeight="Bold"/>
             <TextBox x:Name="tbName" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="Возраст:" FontWeight="Bold"/>
             <TextBox x:Name="tbAge" Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Text="Отдел:" FontWeight="Bold"/>
             <TextBox x:Name="tbDepartment" Text="{Binding Department, UpdateSourceTrigger=PropertyChanged}"/>
-        </StackPanel>
-        <Button Grid.Row="1" Content="Ок" Width="100" Height="35" x:Name="btAdd"/>
+        </StackPanel>        
     </Grid>
 </Window>

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using ListEmployee.Classes;
 
 namespace ListEmployee
 {
@@ -21,30 +22,15 @@ namespace ListEmployee
     /// </summary>
     public partial class MainWindow : Window
     {
-        EmployeeView employeeView = new EmployeeView();
+        Presenter p;
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = employeeView;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            AddEmployee window = new AddEmployee();
-            window.employeeView = employeeView;
-            window.Show();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            AddDepartment window = new AddDepartment();
-            window.employeeView = employeeView;
-            window.Show();
-        }
-
-        private void ListBox_LayoutUpdated(object sender, EventArgs e)
-        {
-
+            p = new Presenter();
+            DataContext = p.Data();
+            btAdd.Click += delegate { p.Add(); };
+            btUpdate.Click += delegate { p.Update(); };
+            btDelete.Click += delegate { p.Delete(); };
         }
     }
 }
