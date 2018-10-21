@@ -13,7 +13,74 @@ namespace ListEmployee
     {
         public ObservableCollection<Department> departments { get; set; }
         ObservableCollection<Employee> employees { get; set; }
+        private RelayCommand addCommand;
+        private RelayCommand removeCommand;
+        private RelayCommand addDepCommand;
+        private RelayCommand removeDepCommand;
         private EmployeeViewModel selectedEmployee;
+        private Department selectedDepartment;
+        public RelayCommand AddCommand
+        {
+            get
+            {
+                return addCommand ??
+                  (addCommand = new RelayCommand(obj =>
+                  {
+                      EmployeeViewModel emp = new EmployeeViewModel(new Employee(), departments);
+                      employeeViewModels.Insert(0, emp);
+                      SelectedEmployee = emp;
+                  }));
+            }
+        }
+        public RelayCommand RemoveCommand
+        {
+            get
+            {
+                return removeCommand ??
+                  (removeCommand = new RelayCommand(obj =>
+                  {
+                      EmployeeViewModel emp = obj as EmployeeViewModel;
+                      if (emp != null)
+                      {
+                          employeeViewModels.Remove(emp);
+                      }
+                  },
+                  (obj) => employeeViewModels.Count > 0));
+            }
+        }        
+        public RelayCommand AddDepCommand
+        {
+            get
+            {
+                return addDepCommand ??
+                  (addDepCommand = new RelayCommand(obj =>
+                  {
+                      Department dep = new Department
+                      {
+                          ID = departments.Count, Name = ""
+                      };
+                      departments.Insert(0, dep);
+                      SelectedDepartment = dep;
+                  }));
+                
+            }
+        }
+        public RelayCommand RemoveDepCommand
+        {
+            get
+            {
+                return removeDepCommand ??
+                  (removeDepCommand = new RelayCommand(obj =>
+                  {
+                      Department dep = obj as Department;
+                      if (dep != null)
+                      {
+                          departments.Remove(dep);
+                      }
+                  },
+                  (obj) => departments.Count > 0));
+            }
+        }
 
         public EmployeeViewModel SelectedEmployee
         {
@@ -29,17 +96,14 @@ namespace ListEmployee
             }
         }
 
-        public void AddEmployee(string name, int age, int departmentId)
+        public Department SelectedDepartment
         {
-            Employee employee = new Employee { Name = name, Age = age, DepartmentId = departmentId };
-            employees.Add(employee);
-            EEE();
-        }
-
-        public void AddDepartment(string name)
-        {
-            int i = departments.Count();
-            departments.Add(new Department { ID = i, Name = name });
+            get { return selectedDepartment; }
+            set
+            {
+                selectedDepartment = value;
+                OnPropertyChanged();
+            }
         }
 
         public EmployeeView()
@@ -59,14 +123,13 @@ namespace ListEmployee
 
         public void EEE()
         {
-            var employeeViewModel = new List<EmployeeViewModel>();
+            employeeViewModels = new ObservableCollection<EmployeeViewModel>();
             foreach (var emp in employees)
             {
-                employeeViewModel.Add(new EmployeeViewModel(emp, departments));
+                employeeViewModels.Add(new EmployeeViewModel(emp, departments));
             }
-            employeeViewModels = employeeViewModel;
         }
-        public IEnumerable<EmployeeViewModel> employeeViewModels { get; set; }
+        public ObservableCollection<EmployeeViewModel> employeeViewModels { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {

@@ -10,18 +10,17 @@ namespace ListEmployee
 {
     public class EmployeeViewModel : INotifyPropertyChanged
     {
-        public EmployeeViewModel(Employee model, IEnumerable<Department> departments)
+        public EmployeeViewModel(Employee model, ObservableCollection<Department> departments)
         {
             Model = model;
-            var departmentViewModel = new List<DepartmentViewModel>();
+            departmentViewModels = new ObservableCollection<DepartmentViewModel>();
             foreach (var dep in departments)
             {
-                departmentViewModel.Add(new DepartmentViewModel(dep));
+                departmentViewModels.Add(new DepartmentViewModel(dep));
             }
-            departmentViewModels = departmentViewModel;
         }
         public Employee Model { get; set; }
-        public IEnumerable<DepartmentViewModel> departmentViewModels { get; private set; }
+        public ObservableCollection<DepartmentViewModel> departmentViewModels { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

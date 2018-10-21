@@ -27,24 +27,5 @@ namespace ListEmployee
             InitializeComponent();
             DataContext = employeeView;
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            AddEmployee window = new AddEmployee();
-            window.employeeView = employeeView;
-            window.Show();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            AddDepartment window = new AddDepartment();
-            window.employeeView = employeeView;
-            window.Show();
-        }
-
-        private void ListBox_LayoutUpdated(object sender, EventArgs e)
-        {
-
-        }
     }
 }
