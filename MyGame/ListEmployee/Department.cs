@@ -7,35 +7,9 @@ using System.ComponentModel;
 
 namespace ListEmployee
 {
-    public class Department : INotifyPropertyChanged
+    public class Department
     {
-        private int id;
-        private string name;
-        public int ID
-        {
-            get
-            {
-                return id;
-            }
-            set
-            {
-                id = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.ID)));
-            }
-        }
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Name)));
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -18,53 +18,28 @@
         </Grid.ColumnDefinitions>
         <TextBlock Text="Список сотрудников" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
         <TextBlock Text="Список департаментов" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0"/>
-        <ListView ItemsSource="{Binding employeeViewModels, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedEmployee}" Grid.Column="0" Grid.Row="1">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Имя"
-                                    Width="120"
-                                    DisplayMemberBinding="{Binding Model.Name}"/>
-                    <GridViewColumn Header="Возраст" Width="50"
-                                    DisplayMemberBinding="{Binding Model.Age}"/>
-                    <GridViewColumn Header="Отдел" Width="150" 
-                                    DisplayMemberBinding="{Binding Model.DepartmentId}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <ListView ItemsSource="{Binding departments}" SelectedItem="{Binding SelectedDepartment}" Grid.Column="1" Grid.Row="1">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="ID"
-                                    Width="20"
-                                    DisplayMemberBinding="{Binding ID}"/>
-                    <GridViewColumn Header="Отделы"
-                                    Width="150"
-                                    DisplayMemberBinding="{Binding Name}"/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <DataGrid x:Name="employeeList" ItemsSource="{Binding Employees}" Grid.Column="0" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Имя" Width="150"/>
+                <DataGridTextColumn Binding="{Binding Age}" Header="Возраст"/>
+                <DataGridTextColumn Binding="{Binding Department.Name}" Header="Отдел" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid ItemsSource="{Binding Departments}" Grid.Column="1" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Отдел"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <StackPanel Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel DataContext="{Binding SelectedEmployee}" Margin="5">
-                <TextBlock Text="Имя"/>
-                <TextBox Text="{Binding Model.Name}"/>
-                <TextBlock Text="Возраст"/>
-                <TextBox Text="{Binding Model.Age}"/>
-                <TextBlock Text="Отдел"/>
-                <ComboBox ItemsSource="{Binding departmentViewModels}"
-                                  DisplayMemberPath="Model.Name"
-                                  SelectedValue="{Binding Model.DepartmentId}"
-                                  SelectedValuePath="Model.ID"/>
-            </StackPanel>
             <Button Command="{Binding AddCommand}" Margin="5" Background="#FF28B921">Добавить Сотрудника</Button>
-            <Button Command="{Binding RemoveCommand}"
-                    CommandParameter="{Binding SelectedEmployee}"
+            <Button Command="{Binding EditCommand}" CommandParameter="{Binding ElementName=employeeList, Path=SelectedItem}">
+                Изменить сотрудника
+            </Button>
+            <Button Command="{Binding DeleteCommand}"
+                    CommandParameter="{Binding ElementName=employeeList, Path=SelectedItem}"
                     Margin="5" Background="#FFB95821">Удалить сотрудника</Button>
         </StackPanel>        
         <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Margin="5" DataContext="{Binding SelectedDepartment}">
-                <TextBlock Text="Отдел"/>
-                <TextBox Text="{Binding Name}"/>
-            </StackPanel>
             <Button Margin="5" Command="{Binding AddDepCommand}">Добавить отдел</Button>
             <Button Margin="5" Command="{Binding RemoveDepCommand}"
                     CommandParameter="{Binding SelectedDepartment}">Удалить отдел</Button>

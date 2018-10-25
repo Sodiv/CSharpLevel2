@@ -1,0 +1,37 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ListEmployee"
+        xmlns:Entity="clr-namespace:System.Data.Entity;assembly=EntityFramework" x:Class="ListEmployee.EmployeeWindow"
+        mc:Ignorable="d"
+        Title="EmployeeWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="354*"/>
+            <RowDefinition Height="65*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="119*"/>
+            <ColumnDefinition Width="673*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <TextBlock Text="Имя"/>
+            <TextBlock Text="Возраст"/>
+            <TextBlock Text="Отдел"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <TextBox Text="{Binding Name}"/>
+            <TextBox Text="{Binding Age}"/>
+            <ComboBox ItemsSource="{Binding Department.Name}">
+            </ComboBox>
+        </StackPanel>
+        <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button IsDefault="True" Click="Accept_Click" Margin="5" MinWidth="60" Content="Ok"/>
+            <Button IsCancel="True" Margin="5" MinWidth="60" Content="Отмена"/>
+
+        </StackPanel>
+
+    </Grid>
+</Window>
