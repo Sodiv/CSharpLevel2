@@ -20,24 +20,14 @@ namespace ListEmployee
     /// </summary>
     public partial class EmployeeWindow : Window
     {
-        public Employee Employee { get; private set; }
-        EmployeeContext db = new EmployeeContext();
-        IEnumerable<Department> departments;
-        IEnumerable<Department> Departments
-        {
-            get { return departments; }
-            set
-            {
-                departments = value;
-            }
-        }
-        public EmployeeWindow(Employee e)
+        public Employee Employee { get; set; }
+        EmployeeViewWindow emp { get; set; }
+        public EmployeeWindow(Employee e, IEnumerable<Department> dep)
         {
             InitializeComponent();
-            Employee = e;
-            db.Departments.Load();
-            Departments = db.Departments.Local.ToBindingList();
-            DataContext = Employee;
+            emp = new EmployeeViewWindow(e, dep);
+            DataContext = emp;
+            Employee = emp.Model;
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e)

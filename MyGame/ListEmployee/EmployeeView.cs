@@ -190,7 +190,7 @@ namespace ListEmployee
             {
                 return addCommand ?? (addCommand = new RelayCommand((o) =>
                   {
-                      EmployeeWindow employeeWindow = new EmployeeWindow(new Employee());
+                      EmployeeWindow employeeWindow = new EmployeeWindow(new Employee(), departments);
                       if (employeeWindow.ShowDialog() == true)
                       {
                           Employee employee = employeeWindow.Employee;
@@ -215,7 +215,7 @@ namespace ListEmployee
                           Age = employee.Age,
                           Department = employee.Department
                       };
-                      EmployeeWindow employeeWindow = new EmployeeWindow(vm);
+                      EmployeeWindow employeeWindow = new EmployeeWindow(vm, departments);
                       if (employeeWindow.ShowDialog() == true)
                       {
                           employee = db.Employees.Find(employeeWindow.Employee.Id);

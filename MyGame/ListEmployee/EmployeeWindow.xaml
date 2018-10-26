@@ -22,10 +22,13 @@
             <TextBlock Text="Отдел"/>
         </StackPanel>
         <StackPanel Grid.Column="1">
-            <TextBox Text="{Binding Name}"/>
-            <TextBox Text="{Binding Age}"/>
-            <ComboBox ItemsSource="{Binding Department.Name}">
-            </ComboBox>
+            <TextBox Text="{Binding Model.Name}"/>
+            <TextBox Text="{Binding Model.Age}"/>
+            <ComboBox ItemsSource="{Binding departmentView}"
+                      DisplayMemberPath="Model.Name"
+                      SelectedValue="{Binding Model.Department}"
+                      SelectedValuePath="Model.Name"/>
+
         </StackPanel>
         <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button IsDefault="True" Click="Accept_Click" Margin="5" MinWidth="60" Content="Ok"/>
