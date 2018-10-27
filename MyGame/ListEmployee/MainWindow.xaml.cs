@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using System.Data;
 
 namespace ListEmployee
 {
@@ -21,11 +22,16 @@ namespace ListEmployee
     /// </summary>
     public partial class MainWindow : Window
     {
-        EmployeeView employeeView = new EmployeeView();
+        Presenter p;
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = employeeView;
+            p = new Presenter();
+            DataContext = p.Data();
+            btnRemove.Click += delegate { p.Delete((DataRowView)employeeDataGrid.SelectedItem); };
+            btnUpdate.Click += delegate { p.Update((DataRowView)employeeDataGrid.SelectedItem); };
+            btnAdd.Click += delegate { p.Add(); };
+            btnDepartment.Click += delegate { p.Dep(); };
         }
     }
 }

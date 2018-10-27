@@ -5,44 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ListEmployee"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="500">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="200"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="Список сотрудников" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
-        <TextBlock Text="Список департаментов" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0"/>
-        <DataGrid x:Name="employeeList" ItemsSource="{Binding Employees}" Grid.Column="0" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="employeeDataGrid" Grid.ColumnSpan="3" ItemsSource="{Binding}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name}" Header="Имя" Width="150"/>
-                <DataGridTextColumn Binding="{Binding Age}" Header="Возраст"/>
-                <DataGridTextColumn Binding="{Binding Department.Name}" Header="Отдел" Width="120"/>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="30" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="200"/>
+                <DataGridTextColumn Header="Возраст" Binding="{Binding Age}" Width="70"/>
+                <DataGridTextColumn Header="Отдел" Binding="{Binding Department}" Width="200"/>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid ItemsSource="{Binding Departments}" Grid.Column="1" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name}" Header="Отдел"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <StackPanel Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Command="{Binding AddCommand}" Margin="5" Background="#FF28B921">Добавить Сотрудника</Button>
-            <Button Command="{Binding EditCommand}" CommandParameter="{Binding ElementName=employeeList, Path=SelectedItem}">
-                Изменить сотрудника
-            </Button>
-            <Button Command="{Binding DeleteCommand}"
-                    CommandParameter="{Binding ElementName=employeeList, Path=SelectedItem}"
-                    Margin="5" Background="#FFB95821">Удалить сотрудника</Button>
-        </StackPanel>        
-        <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Margin="5" Command="{Binding AddDepCommand}">Добавить отдел</Button>
-            <Button Margin="5" Command="{Binding RemoveDepCommand}"
-                    CommandParameter="{Binding SelectedDepartment}">Удалить отдел</Button>
-        </StackPanel>
+        <Button x:Name="btnAdd" Content="Добавить" Width="70" Height="30" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button x:Name="btnUpdate" Content="Изменить" Width="70" Height="30" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button x:Name="btnRemove" Content="Удалить" Width="70" Height="30" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button x:Name="btnDepartment" Content="Отделы" Width="70" Height="30" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>
