@@ -21,10 +21,11 @@ namespace ListEmployee
     public partial class EditEmployeeWindow : Window
     {
         public Employee resultRow { get; set; }
-        public EditEmployeeWindow(Employee dataRow)
+        public EditEmployeeWindow(Employee dataRow, Presenter p)
         {
             InitializeComponent();
             resultRow = dataRow;
+            DataContext = p.model;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

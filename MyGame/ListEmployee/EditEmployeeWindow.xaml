@@ -23,7 +23,7 @@
         <StackPanel Grid.Column="1">
             <TextBox x:Name="nameTextBox"/>
             <TextBox x:Name="ageTextBox"/>
-            <TextBox x:Name="departmentTextBox"/>
+            <ComboBox x:Name="departmentTextBox" ItemsSource="{Binding Departments}" DisplayMemberPath="Name"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button IsDefault="True" Content="Ok" Click="saveButton_Click" Width="100" Height="30" Margin="0,0,3,0"/>

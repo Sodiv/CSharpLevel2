@@ -27,7 +27,7 @@ namespace ListEmployee
         public void Add()
         {
             Employee employee = new Employee();
-            EditEmployeeWindow editEmployeeWindow = new EditEmployeeWindow(employee);
+            EditEmployeeWindow editEmployeeWindow = new EditEmployeeWindow(employee, this);
             editEmployeeWindow.ShowDialog();
             if (editEmployeeWindow.DialogResult.Value)
             {
@@ -38,7 +38,7 @@ namespace ListEmployee
         public void Edit(Employee employee)
         {
             if (employee == null) return;
-            EditEmployeeWindow editEmployeeWindow = new EditEmployeeWindow(employee);
+            EditEmployeeWindow editEmployeeWindow = new EditEmployeeWindow(employee, this);
             editEmployeeWindow.ShowDialog();
             if (editEmployeeWindow.DialogResult.Value)
             {
