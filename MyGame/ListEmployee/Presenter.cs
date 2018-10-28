@@ -51,11 +51,6 @@ namespace ListEmployee
             model.Delete(Convert.ToInt32(employee.Id));
         }
 
-        public void DepShow()
-        {
-            DepartmentWindow departmentWindow = new DepartmentWindow(this);
-            departmentWindow.Show();
-        }
 
         public void AddDep()
         {

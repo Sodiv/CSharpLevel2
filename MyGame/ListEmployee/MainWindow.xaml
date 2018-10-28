@@ -6,30 +6,57 @@
         xmlns:local="clr-namespace:ListEmployee"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="500" Loaded="Window_Loaded">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-        </Grid.RowDefinitions>
-        <ListView x:Name="employeeDataGrid" Grid.ColumnSpan="3" ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="#" DisplayMemberBinding="{Binding Id}" Width="30"/>
-                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}" Width="200"/>
-                    <GridViewColumn Header="Возраст" DisplayMemberBinding="{Binding Age}" Width="70"/>
-                    <GridViewColumn Header="Отдел" DisplayMemberBinding="{Binding Department}" Width="200"/>
-                </GridView>                
-            </ListView.View>
-        </ListView>
-        <Button x:Name="btnAdd" Content="Добавить" Width="70" Height="30" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Button x:Name="btnUpdate" Content="Изменить" Width="70" Height="30" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Button x:Name="btnRemove" Content="Удалить" Width="70" Height="30" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Button x:Name="btnDepartment" Content="Отделы" Width="70" Height="30" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    </Grid>
+    <TabControl>
+        <TabItem Header="Сотрудники">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>                    
+                </Grid.RowDefinitions>
+                <ListView x:Name="employeeDataGrid" Grid.ColumnSpan="3" ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="#" DisplayMemberBinding="{Binding Id}" Width="30"/>
+                            <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}" Width="200"/>
+                            <GridViewColumn Header="Возраст" DisplayMemberBinding="{Binding Age}" Width="70"/>
+                            <GridViewColumn Header="Отдел" DisplayMemberBinding="{Binding Department}" Width="200"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <Button x:Name="btnAdd" Content="Добавить" Width="70" Height="30" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Button x:Name="btnUpdate" Content="Изменить" Width="70" Height="30" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Button x:Name="btnRemove" Content="Удалить" Width="70" Height="30" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>                
+            </Grid>
+        </TabItem>
+        <TabItem Header="Отделы">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <ListView x:Name="departmentDataGrid" Grid.ColumnSpan="3" ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartment}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="#" DisplayMemberBinding="{Binding Id}" Width="30"/>
+                            <GridViewColumn Header="Отдел" DisplayMemberBinding="{Binding Name}" Width="300"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <Button x:Name="btnAddDep" Grid.Row="1" Content="Добавить" HorizontalAlignment="Center" Width="100" Height="35"/>
+                <Button x:Name="btnEditDep" Grid.Column="1" Grid.Row="1" Content="Изменить" HorizontalAlignment="Center" Width="100" Height="35"/>
+                <Button x:Name="btnRemoveDep" Grid.Column="2" Grid.Row="1" Content="Удалить" HorizontalAlignment="Center" Width="100" Height="35"/>
+            </Grid>
+        </TabItem>
+    </TabControl>
+    
 </Window>

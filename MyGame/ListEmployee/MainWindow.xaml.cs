@@ -31,7 +31,9 @@ namespace ListEmployee
             btnAdd.Click += delegate { p.Add(); };
             btnUpdate.Click += delegate { p.Edit(p.model.SelectedEmployee); };
             btnRemove.Click += delegate { p.Delete(p.model.SelectedEmployee); };
-            btnDepartment.Click += delegate { p.DepShow(); };
+            btnAddDep.Click += delegate { p.AddDep(); };
+            btnEditDep.Click += delegate { p.Edit(p.model.SelectedDepartment); };
+            btnRemoveDep.Click += delegate { p.Delete(p.model.SelectedDepartment); };
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
