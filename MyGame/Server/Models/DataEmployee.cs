@@ -23,8 +23,7 @@ namespace Server.Models
         /// <returns>Массив сотрудников</returns>
         public List<Employee> GetEmployees()
         {
-            List<Employee> employees = new List<Employee>();
-            List<Department> departments = new List<Department>();
+            List<Employee> employees = new List<Employee>();            
             #region Заполнение БД
             //string nameD = "";
             //string nameE = "";
@@ -72,24 +71,16 @@ namespace Server.Models
             }
             return employees;
         }
-                
-        public int AddEmployee(Employee employee)
-        {
-            int e;
-            try
-            {
-                string sqlAdd = $@"INSERT INTO Employee(Name, Age, DepartmentId) VALUES (N'{employee.Name}', {employee.Age}, (SELECT Id FROM Department WHERE Name LIKE N'{employee.Department}')) SELECT @@IDENTITY;";
 
-                using(var com=new SqlCommand(sqlAdd, sqlConnection))
-                {
-                    e = Convert.ToInt32(com.ExecuteScalar());
-                }
-            }
-            catch
+        public void AddEmployee(Employee employee)
+        {
+            string sqlAdd = $@"INSERT INTO Employee(Name, Age, DepartmentId) 
+VALUES (N'{employee.Name}', {employee.Age}, (SELECT Id FROM Department WHERE Name LIKE N'{employee.Department}'));";
+
+            using (var com = new SqlCommand(sqlAdd, sqlConnection))
             {
-                return -1;
+                com.ExecuteNonQuery();
             }
-            return e;
         }
 
         public bool EditEmployee(Employee employee, int id)
@@ -118,6 +109,63 @@ namespace Server.Models
                 com.ExecuteNonQuery();
             }
                       
+        }
+
+        public List<Department> GetDepartments()
+        {
+            List<Department> departments = new List<Department>();
+            string sql = @"SELECT * FROM Department";
+            using(SqlCommand com = new SqlCommand(sql, sqlConnection))
+            {
+                using(SqlDataReader reader = com.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        departments.Add(
+                            new Department()
+                            {
+                                Id = reader["Id"].ToString(),
+                                Name = reader["Name"].ToString()
+                            });
+                    }
+                }
+            }
+            return departments;
+        }
+
+        public void AddDepartment(Department department)
+        {
+            string sql = $@"INSERT INTO Department(Name) VALUES (N'{department.Name}')";
+            using(var com = new SqlCommand(sql, sqlConnection))
+            {
+                com.ExecuteNonQuery();
+            }
+        }
+
+        public bool EditDepartment(Department department, int id)
+        {
+            try
+            {
+                string sql = $@"UPDATE Department SET Name='{department.Name}' WHERE Id={id}";
+                using(var com = new SqlCommand(sql, sqlConnection))
+                {
+                    com.ExecuteNonQuery();
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public void DeleteDepartment(int id)
+        {
+            string sql = $@"DELETE FROM Employee WHERE DepartmentId={id}; DELETE FROM Department WHERE Id={id};";
+            using(var com = new SqlCommand(sql, sqlConnection))
+            {
+                com.ExecuteNonQuery();
+            }
         }
     }
 }
