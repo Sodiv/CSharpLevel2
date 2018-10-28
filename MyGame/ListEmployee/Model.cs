@@ -39,7 +39,9 @@ namespace ListEmployee
             Departments = new ObservableCollection<Department>();
             httpClient = new HttpClient();
         }
-
+        /// <summary>
+        /// Загрузка данных с сервера
+        /// </summary>
         public void Load()
         {
             var json = JsonConvert.DeserializeObject<Employee[]>(httpClient.GetStringAsync($"{url}getemployee").Result);
@@ -53,7 +55,10 @@ namespace ListEmployee
                 Departments.Add(department);
             }
         }
-
+        /// <summary>
+        /// Добавление сотрудника
+        /// </summary>
+        /// <param name="value">сотрудник</param>
         public void Add(Employee value)
         {
             string obj = @"{'Name': '" + value.Name + "', " +
@@ -64,7 +69,10 @@ namespace ListEmployee
             Employees.Clear();
             Load();
         }
-
+        /// <summary>
+        /// Редактирование сотрудника
+        /// </summary>
+        /// <param name="value">сотрудник</param>
         public void Edit(Employee value)
         {            
             string obj = @"{'Name': '" + value.Name + "', " +
@@ -73,13 +81,19 @@ namespace ListEmployee
             StringContent content = new StringContent(obj, Encoding.UTF8, "application/json");
             httpClient.PostAsync($"{url}editemployee/{value.Id}", content);            
         }
-
+        /// <summary>
+        /// Удаление сотрудника
+        /// </summary>
+        /// <param name="id">Id сотрудника</param>
         public void Delete(int id)
         {
             httpClient.GetAsync($"{url}deleteemployee/{id}");
             Employees.Remove(selectedEmployee);
         }
-
+        /// <summary>
+        /// Добавление отдела
+        /// </summary>
+        /// <param name="value">Отдел</param>
         public void Add(Department value)
         {
             string obj = @"{'Name': '" + value.Name + "'}";
@@ -88,7 +102,10 @@ namespace ListEmployee
             Departments.Clear();
             Load();
         }
-
+        /// <summary>
+        /// Редактирование отдела
+        /// </summary>
+        /// <param name="value">Отдел</param>
         public void Edit(Department value)
         {
             string obj = @"{'Name': '" + value.Name + "'}";
@@ -98,7 +115,10 @@ namespace ListEmployee
             Departments.Clear();
             Load();
         }
-
+        /// <summary>
+        /// Удаление отдела
+        /// </summary>
+        /// <param name="id">Id отдела</param>
         public void DeleteD(int id)
         {
             httpClient.GetAsync($"{url}deletedepartment/{id}");
