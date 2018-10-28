@@ -23,8 +23,6 @@ namespace ListEmployee
         public DepartmentWindow(Presenter p)
         {
             InitializeComponent();
-            DataContext = p.DataDep();
-            btnRemove.Click += delegate { p.DeleteDep((DataRowView)departmentDataGrid.SelectedItem); };
         }
     }
 }

@@ -27,11 +27,12 @@ namespace ListEmployee
         {
             InitializeComponent();
             p = new Presenter();
-            DataContext = p.Data();
-            btnRemove.Click += delegate { p.Delete((DataRowView)employeeDataGrid.SelectedItem); };
-            btnUpdate.Click += delegate { p.Update((DataRowView)employeeDataGrid.SelectedItem); };
-            btnAdd.Click += delegate { p.Add(); };
-            btnDepartment.Click += delegate { p.Dep(); };
+            DataContext = p.model;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            p.Load();
         }
     }
 }
