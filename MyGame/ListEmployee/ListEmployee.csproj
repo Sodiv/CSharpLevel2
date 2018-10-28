@@ -63,6 +63,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="EditDepartmentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EditEmployeeWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -78,6 +82,9 @@
     <Compile Include="Department.cs" />
     <Compile Include="DepartmentWindow.xaml.cs">
       <DependentUpon>DepartmentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditDepartmentWindow.xaml.cs">
+      <DependentUpon>EditDepartmentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditEmployeeWindow.xaml.cs">
       <DependentUpon>EditEmployeeWindow.xaml</DependentUpon>

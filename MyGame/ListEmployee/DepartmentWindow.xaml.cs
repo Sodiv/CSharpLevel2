@@ -23,6 +23,10 @@ namespace ListEmployee
         public DepartmentWindow(Presenter p)
         {
             InitializeComponent();
+            DataContext = p.model;
+            btnAdd.Click += delegate { p.AddDep(); };
+            btnEdit.Click += delegate { p.Edit(p.model.SelectedDepartment); };
+            btnRemove.Click += delegate { p.Delete(p.model.SelectedDepartment); };
         }
     }
 }

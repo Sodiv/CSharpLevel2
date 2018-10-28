@@ -20,25 +20,37 @@ namespace ListEmployee
         public ObservableCollection<Employee> Employees { get; set; }
         public ObservableCollection<Department> Departments { get; set; }
         private Employee selectedEmployee;
+        private Department selectedDepartment;
         public Employee SelectedEmployee
         {
             get { return selectedEmployee; }
             set { selectedEmployee = value; }
+        }
+        public Department SelectedDepartment
+        {
+            get { return selectedDepartment; }
+            set { selectedDepartment = value; }
         }
         private string url = @"http://localhost:52137/";
         HttpClient httpClient;
         public Model()
         {
             Employees = new ObservableCollection<Employee>();
+            Departments = new ObservableCollection<Department>();
             httpClient = new HttpClient();
         }
 
         public void Load()
         {
             var json = JsonConvert.DeserializeObject<Employee[]>(httpClient.GetStringAsync($"{url}getemployee").Result);
-            foreach(var employee in json)
+            var jsond = JsonConvert.DeserializeObject<Department[]>(httpClient.GetStringAsync($"{url}getdepartment").Result);
+            foreach (var employee in json)
             {
                 Employees.Add(employee);
+            }            
+            foreach(var department in jsond)
+            {
+                Departments.Add(department);
             }
         }
 
@@ -66,6 +78,34 @@ namespace ListEmployee
         {
             httpClient.GetAsync($"{url}deleteemployee/{id}");
             Employees.Remove(selectedEmployee);
+        }
+
+        public void Add(Department value)
+        {
+            string obj = @"{'Name': '" + value.Name + "'}";
+            StringContent content = new StringContent(obj, Encoding.UTF8, "application/json");
+            httpClient.PostAsync($"{url}adddepartment", content);
+            Departments.Clear();
+            Load();
+        }
+
+        public void Edit(Department value)
+        {
+            string obj = @"{'Name': '" + value.Name + "'}";
+            StringContent content = new StringContent(obj, Encoding.UTF8, "application/json");
+            httpClient.PostAsync($"{url}editdepartment/{value.Id}", content);
+            Employees.Clear();
+            Departments.Clear();
+            Load();
+        }
+
+        public void DeleteD(int id)
+        {
+            httpClient.GetAsync($"{url}deletedepartment/{id}");
+            Departments.Remove(selectedDepartment);
+            Employees.Clear();
+            Departments.Clear();
+            Load();
         }
     }
 }

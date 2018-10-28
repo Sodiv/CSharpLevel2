@@ -51,10 +51,37 @@ namespace ListEmployee
             model.Delete(Convert.ToInt32(employee.Id));
         }
 
-        public void Dep()
+        public void DepShow()
         {
             DepartmentWindow departmentWindow = new DepartmentWindow(this);
             departmentWindow.Show();
+        }
+
+        public void AddDep()
+        {
+            Department department = new Department();
+            EditDepartmentWindow editDepartmentWindow = new EditDepartmentWindow(department);
+            editDepartmentWindow.ShowDialog();
+            if (editDepartmentWindow.DialogResult.Value)
+            {
+                model.Add(editDepartmentWindow.result);
+            }
+        }
+
+        public void Edit(Department department)
+        {
+            if (department == null) return;
+            EditDepartmentWindow editDepartmentWindow = new EditDepartmentWindow(department);
+            editDepartmentWindow.ShowDialog();
+            if (editDepartmentWindow.DialogResult.Value)
+            {
+                model.Edit(department);
+            }
+        }
+
+        public void Delete(Department department)
+        {
+            model.DeleteD(Convert.ToInt32(department.Id));
         }
     }
 }
