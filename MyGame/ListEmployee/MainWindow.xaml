@@ -17,12 +17,12 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="employeeDataGrid" Grid.ColumnSpan="3" ItemsSource="{Binding Employees}">
+        <ListView x:Name="employeeDataGrid" Grid.ColumnSpan="3" ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="#" DisplayMemberBinding="{Binding Id}" Width="30"/>
                     <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}" Width="200"/>
-                    <GridViewColumn Header="Возраст" DisplayMemberBinding="{Binding Age}" Width="70"/>
+                    <GridViewColumn Header="Возраст" DisplayMemberBinding="{Binding Age, UpdateSourceTrigger=PropertyChanged}" Width="70"/>
                     <GridViewColumn Header="Отдел" DisplayMemberBinding="{Binding Department}" Width="200"/>
                 </GridView>                
             </ListView.View>

@@ -19,6 +19,12 @@ namespace ListEmployee
     {
         public ObservableCollection<Employee> Employees { get; set; }
         public ObservableCollection<Department> Departments { get; set; }
+        private Employee selectedEmployee;
+        public Employee SelectedEmployee
+        {
+            get { return selectedEmployee; }
+            set { selectedEmployee = value; }
+        }
         private string url = @"http://localhost:52137/";
         HttpClient httpClient;
         public Model()
@@ -29,12 +35,26 @@ namespace ListEmployee
 
         public void Load()
         {
-            var res = httpClient.GetStringAsync($"{url}getemployee").Result;
-            var json = JsonConvert.DeserializeObject<Employee[]>(res);
+            var json = JsonConvert.DeserializeObject<Employee[]>(httpClient.GetStringAsync($"{url}getemployee").Result);
             foreach(var employee in json)
             {
                 Employees.Add(employee);
             }
+        }
+
+        public void Edit(Employee value)
+        {            
+            string obj = @"{'Name': '" + value.Name + "', " +
+                "'Age': '" + value.Age + "', " +
+                "'Department': '" + value.Department + "'}";
+            StringContent content = new StringContent(obj, Encoding.UTF8, "application/json");
+            var res = httpClient.PostAsync($"{url}editemployee/{value.Id}", content).Result;
+        }
+
+        public void Delete(int id)
+        {
+            httpClient.GetAsync($"{url}deleteemployee/{id}");
+            Employees.Remove(selectedEmployee);
         }
     }
 }

@@ -19,11 +19,9 @@ namespace Server.Controllers
         }
 
         [Route("addemployee")]
-        public HttpResponseMessage Post([FromBody]Employee value)
+        public int Post([FromBody]Employee value)
         {
-            if (data.AddEmployee(value))
-                return Request.CreateResponse(HttpStatusCode.Created);
-            else return Request.CreateResponse(HttpStatusCode.BadRequest);
+            return data.AddEmployee(value);
         }
 
         [Route("editemployee/{id}")]

@@ -20,8 +20,8 @@ namespace ListEmployee
     /// </summary>
     public partial class EditEmployeeWindow : Window
     {
-        public DataRow resultRow { get; set; }
-        public EditEmployeeWindow(DataRow dataRow, Presenter p)
+        public Employee resultRow { get; set; }
+        public EditEmployeeWindow(Employee dataRow)
         {
             InitializeComponent();
             resultRow = dataRow;
@@ -29,16 +29,16 @@ namespace ListEmployee
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            nameTextBox.Text = resultRow["Name"].ToString();
-            ageTextBox.Text = resultRow["Age"].ToString();
-            departmentTextBox.Text = resultRow["Department"].ToString();
+            nameTextBox.Text = resultRow.Name;
+            ageTextBox.Text = resultRow.Age;
+            departmentTextBox.Text = resultRow.Department;
         }
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
-            resultRow["Name"] = nameTextBox.Text;
-            resultRow["Age"] = ageTextBox.Text;
-            resultRow["Department"] = departmentTextBox.Text;
+            resultRow.Name = nameTextBox.Text;
+            resultRow.Age = ageTextBox.Text;
+            resultRow.Department = departmentTextBox.Text;
             this.DialogResult = true;
         }
 

@@ -17,17 +17,27 @@ namespace ListEmployee
             
         }
         /// <summary>
-        /// Data Context
+        /// Загрузка данных
         /// </summary>
-        /// <returns>Возврат таблицы данных</returns>
-        public object Data()
-        {
-            return null;
-        }
-
         public void Load()
         {
             model.Load();
+        }
+
+        public void Edit(Employee employee)
+        {
+            if (employee == null) return;
+            EditEmployeeWindow editEmployeeWindow = new EditEmployeeWindow(employee);
+            editEmployeeWindow.ShowDialog();
+            if (editEmployeeWindow.DialogResult.Value)
+            {
+                model.Edit(employee);
+            }            
+        }
+
+        public void Delete(Employee employee)
+        {
+            model.Delete(Convert.ToInt32(employee.Id));
         }
 
         public void Dep()

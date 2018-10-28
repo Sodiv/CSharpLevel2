@@ -73,22 +73,23 @@ namespace Server.Models
             return employees;
         }
 
-        public bool AddEmployee(Employee employee)
+        public int AddEmployee(Employee employee)
         {
+            int e;
             try
             {
-                string sqlAdd = $@"INSERT INTO Employee(Name, Age, DepartmentId) VALUES (N'{employee.Name}', {employee.Age}, (SELECT Id FROM Department WHERE Name LIKE N'{employee.Department}'));";
+                string sqlAdd = $@"INSERT INTO Employee(Name, Age, DepartmentId) VALUES (N'{employee.Name}', {employee.Age}, (SELECT Id FROM Department WHERE Name LIKE N'{employee.Department}')) SELECT @@IDENTITY;";
 
                 using(var com=new SqlCommand(sqlAdd, sqlConnection))
                 {
-                    com.ExecuteNonQuery();
+                    e = Convert.ToInt32(com.ExecuteScalar());
                 }
             }
             catch
             {
-                return false;
+                return -1;
             }
-            return true;
+            return e;
         }
 
         public bool EditEmployee(Employee employee, int id)
