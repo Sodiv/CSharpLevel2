@@ -42,13 +42,24 @@ namespace ListEmployee
             }
         }
 
+        public void Add(Employee value)
+        {
+            string obj = @"{'Name': '" + value.Name + "', " +
+                "'Age': '" + value.Age + "', " +
+                "'Department': '" + value.Department + "'}";
+            StringContent content = new StringContent(obj, Encoding.UTF8, "application/json");
+            httpClient.PostAsync($"{url}addemployee", content);
+            Employees.Clear();
+            Load();
+        }
+
         public void Edit(Employee value)
         {            
             string obj = @"{'Name': '" + value.Name + "', " +
                 "'Age': '" + value.Age + "', " +
                 "'Department': '" + value.Department + "'}";
             StringContent content = new StringContent(obj, Encoding.UTF8, "application/json");
-            var res = httpClient.PostAsync($"{url}editemployee/{value.Id}", content).Result;
+            httpClient.PostAsync($"{url}editemployee/{value.Id}", content);            
         }
 
         public void Delete(int id)

@@ -17,11 +17,11 @@ namespace Server.Controllers
         {
             return data.GetEmployees();
         }
-
+        
         [Route("addemployee")]
-        public int Post([FromBody]Employee value)
+        public HttpResponseMessage Post([FromBody]Employee value)
         {
-            return data.AddEmployee(value);
+            return Request.CreateResponse<int>(data.AddEmployee(value));
         }
 
         [Route("editemployee/{id}")]

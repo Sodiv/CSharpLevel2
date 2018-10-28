@@ -28,6 +28,7 @@ namespace ListEmployee
             InitializeComponent();
             p = new Presenter();
             DataContext = p.model;
+            btnAdd.Click += delegate { p.Add(); };
             btnUpdate.Click += delegate { p.Edit(p.model.SelectedEmployee); };
             btnRemove.Click += delegate { p.Delete(p.model.SelectedEmployee); };
         }

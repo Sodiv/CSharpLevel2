@@ -24,6 +24,17 @@ namespace ListEmployee
             model.Load();
         }
 
+        public void Add()
+        {
+            Employee employee = new Employee();
+            EditEmployeeWindow editEmployeeWindow = new EditEmployeeWindow(employee);
+            editEmployeeWindow.ShowDialog();
+            if (editEmployeeWindow.DialogResult.Value)
+            {
+                model.Add(editEmployeeWindow.resultRow);
+            }
+        }
+
         public void Edit(Employee employee)
         {
             if (employee == null) return;

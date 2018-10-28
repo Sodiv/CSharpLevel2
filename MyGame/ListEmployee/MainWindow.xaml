@@ -22,7 +22,7 @@
                 <GridView>
                     <GridViewColumn Header="#" DisplayMemberBinding="{Binding Id}" Width="30"/>
                     <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}" Width="200"/>
-                    <GridViewColumn Header="Возраст" DisplayMemberBinding="{Binding Age, UpdateSourceTrigger=PropertyChanged}" Width="70"/>
+                    <GridViewColumn Header="Возраст" DisplayMemberBinding="{Binding Age}" Width="70"/>
                     <GridViewColumn Header="Отдел" DisplayMemberBinding="{Binding Department}" Width="200"/>
                 </GridView>                
             </ListView.View>
